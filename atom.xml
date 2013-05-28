@@ -1,16 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
+  <title><![CDATA[dragonszy的博客]]></title>
   <link href="http://dragonszy.github.io/atom.xml" rel="self"/>
   <link href="http://dragonszy.github.io/"/>
-  <updated>2013-05-28T10:51:18+08:00</updated>
+  <updated>2013-05-28T12:15:10+08:00</updated>
   <id>http://dragonszy.github.io/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[dragonszy]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[如何使用Octopress博客]]></title>
+    <link href="http://dragonszy.github.io/blog/2013/05/28/how-to-use-octopress/"/>
+    <updated>2013-05-28T10:58:00+08:00</updated>
+    <id>http://dragonszy.github.io/blog/2013/05/28/how-to-use-octopress</id>
+    <content type="html"><![CDATA[<h3>创建Post</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rake</span> <span class="n">new_post</span><span class="o">[</span><span class="s2">&quot;My First Octopress Blog&quot;</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>修改category</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">categories</span><span class="p">:</span> <span class="no">Octopress</span>
+</span><span class='line'><span class="c1"># 一个categories</span>
+</span><span class='line'><span class="ss">categories</span><span class="p">:</span> <span class="o">[</span><span class="no">CSS3</span><span class="p">,</span> <span class="no">HTML5</span><span class="o">]</span>
+</span><span class='line'><span class="c1"># 多个categories</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>创建Page</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rake</span> <span class="n">new_page</span><span class="o">[</span><span class="k">super</span><span class="o">-</span><span class="n">awesome</span><span class="o">]</span>
+</span><span class='line'><span class="c1"># creates /source/super-awesome/index.markdown</span>
+</span><span class='line'><span class="n">rake</span> <span class="n">new_page</span><span class="o">[</span><span class="k">super</span><span class="o">-</span><span class="n">awesome</span><span class="o">/</span><span class="n">page</span><span class="o">.</span><span class="n">html</span><span class="o">]</span>
+</span><span class='line'><span class="c1"># creates /source/super-awesome/page.html</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>生成和预览</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rake</span> <span class="n">generate</span>
+</span><span class='line'><span class="n">rake</span> <span class="n">watch</span>
+</span><span class='line'><span class="n">rake</span> <span class="n">preview</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
 </feed>

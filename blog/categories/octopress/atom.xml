@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Octopress | dragonszy的博客]]></title>
+  <link href="http://dragonszy.github.io/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://dragonszy.github.io/"/>
+  <updated>2013-05-28T12:15:10+08:00</updated>
+  <id>http://dragonszy.github.io/</id>
+  <author>
+    <name><![CDATA[dragonszy]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[如何使用Octopress博客]]></title>
+    <link href="http://dragonszy.github.io/blog/2013/05/28/how-to-use-octopress/"/>
+    <updated>2013-05-28T10:58:00+08:00</updated>
+    <id>http://dragonszy.github.io/blog/2013/05/28/how-to-use-octopress</id>
+    <content type="html"><![CDATA[<h3>创建Post</h3>
+
+<p><code>ruby
+rake new_post["My First Octopress Blog"]
+</code></p>
+
+<h3>修改category</h3>
+
+<p>``` ruby
+categories: Octopress</p>
+
+<h1>一个categories</h1>
+
+<p>categories: [CSS3, HTML5]</p>
+
+<h1>多个categories</h1>
+
+<p>```</p>
+
+<h3>创建Page</h3>
+
+<p>``` ruby
+rake new_page[super-awesome]</p>
+
+<h1>creates /source/super-awesome/index.markdown</h1>
+
+<p>rake new_page[super-awesome/page.html]</p>
+
+<h1>creates /source/super-awesome/page.html</h1>
+
+<p>```</p>
+
+<h3>生成和预览</h3>
+
+<p><code>ruby
+rake generate
+rake watch
+rake preview
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>
