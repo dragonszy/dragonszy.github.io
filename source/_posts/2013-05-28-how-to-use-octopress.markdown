@@ -20,16 +20,30 @@ categories: [CSS3, HTML5]
 ```
 
 ### 创建Page
-``` ruby
-rake new_page[super-awesome]
+``` 
+$ rake new_page[super-awesome]
 # creates /source/super-awesome/index.markdown
-rake new_page[super-awesome/page.html]
+$ rake new_page[super-awesome/page.html]
 # creates /source/super-awesome/page.html
 ```
 
 ### 生成和预览
-``` ruby
-rake generate
-rake watch
-rake preview
+``` 
+$ rake generate
+$ rake watch
+$ rake preview
+```
+
+### 部署到Github
+``` 
+$ rake setup_github_pages
+$ rake generate
+$ rake deploy
+```
+
+### 上传源代码到Github
+```
+$ git add .
+$ git commit -m 'some changes'
+$ git push origin source
 ```
