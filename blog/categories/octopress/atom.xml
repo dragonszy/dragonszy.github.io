@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | dragonszy的博客]]></title>
   <link href="http://dragonszy.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://dragonszy.github.io/"/>
-  <updated>2013-05-28T12:15:10+08:00</updated>
+  <updated>2013-05-29T20:19:10+08:00</updated>
   <id>http://dragonszy.github.io/</id>
   <author>
     <name><![CDATA[dragonszy]]></name>
@@ -39,12 +39,12 @@ categories: Octopress</p>
 
 <h3>创建Page</h3>
 
-<p>``` ruby
-rake new_page[super-awesome]</p>
+<p>```
+$ rake new_page[super-awesome]</p>
 
 <h1>creates /source/super-awesome/index.markdown</h1>
 
-<p>rake new_page[super-awesome/page.html]</p>
+<p>$ rake new_page[super-awesome/page.html]</p>
 
 <h1>creates /source/super-awesome/page.html</h1>
 
@@ -52,10 +52,26 @@ rake new_page[super-awesome]</p>
 
 <h3>生成和预览</h3>
 
-<p><code>ruby
-rake generate
-rake watch
-rake preview
+<p><code>
+$ rake generate
+$ rake watch
+$ rake preview
+</code></p>
+
+<h3>部署到Github</h3>
+
+<p><code>
+$ rake setup_github_pages
+$ rake generate
+$ rake deploy
+</code></p>
+
+<h3>上传源代码到Github</h3>
+
+<p><code>
+$ git add .
+$ git commit -m 'some changes'
+$ git push origin source
 </code></p>
 ]]></content>
   </entry>
