@@ -4,7 +4,7 @@
   <title><![CDATA[dragonszy的博客]]></title>
   <link href="http://dragonszy.github.io/atom.xml" rel="self"/>
   <link href="http://dragonszy.github.io/"/>
-  <updated>2013-05-29T20:29:00+08:00</updated>
+  <updated>2013-05-30T22:08:52+08:00</updated>
   <id>http://dragonszy.github.io/</id>
   <author>
     <name><![CDATA[dragonszy]]></name>
@@ -12,6 +12,30 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[如何删除Rails的Migrations]]></title>
+    <link href="http://dragonszy.github.io/blog/2013/05/30/how-to-delete-rails-migration/"/>
+    <updated>2013-05-30T21:55:00+08:00</updated>
+    <id>http://dragonszy.github.io/blog/2013/05/30/how-to-delete-rails-migration</id>
+    <content type="html"><![CDATA[<h3>错误示范</h3>
+
+<p>直接删除db/migrate目录下的migration的rb文件，然后执行rake db:migrate</p>
+
+<p>这样做以后会发现schema.rb中的内容还是老样子，比如删除了一个create_posts的migration，重新执行rake db:migrate之后schema.rb中仍然有create_table &ldquo;posts&#8221;的代码，打开数据库，会发现还是生成了posts这张表。这样直接删除migration文件并未达到删除表或修改表的作用。</p>
+
+<h3>解决方法</h3>
+
+<p>打开数据库，打开project_development数据库，打开schema_migrations表，对应着现在的db/migrate目录下的migration时间戳，把多余的删除，然后删除schema.rb多余代码，重新执行rake db:migrate，可以发现schema.rb并没有变动。</p>
+
+<h3>正确做法</h3>
+
+<p>一般来说最好不要去编辑一个已经存在了的migration，即便里面有错误。
+最好的做法是写一个新的migration来执行修复上一个写错了的migration的操作。</p>
+
+<p>详细请参考：<a href="http://guides.ruby-china.org/migrations.html">Rails Migration Guides</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[开源的Python敏捷开发库 - Kivy]]></title>
