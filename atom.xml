@@ -4,7 +4,7 @@
   <title><![CDATA[dragonszy的博客]]></title>
   <link href="http://dragonszy.github.io/atom.xml" rel="self"/>
   <link href="http://dragonszy.github.io/"/>
-  <updated>2013-05-30T22:08:52+08:00</updated>
+  <updated>2013-05-31T12:07:37+08:00</updated>
   <id>http://dragonszy.github.io/</id>
   <author>
     <name><![CDATA[dragonszy]]></name>
@@ -12,6 +12,69 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Git 快捷指南]]></title>
+    <link href="http://dragonszy.github.io/blog/2013/05/31/git-quick-guide/"/>
+    <updated>2013-05-31T11:50:00+08:00</updated>
+    <id>http://dragonszy.github.io/blog/2013/05/31/git-quick-guide</id>
+    <content type="html"><![CDATA[<h2>基本快照</h2>
+
+<p>简而言之，使用 git add 添加需要追踪的新文件和待提交的更改， 然后使用 git status 和 git diff 查看有何改动， 最后用 git commit 将你的快照记录。这就是你要用的基本流程，绝大部分时候都是这样的。</p>
+
+<h3>git add 添加文件到缓存</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># 添加所有文件
+</span><span class='line'>git add .
+</span><span class='line'>git add *</span></code></pre></td></tr></table></div></figure>
+
+
+<p>一言以蔽之， 当你要将你的修改包含在即将提交的快照里的时候，执行 git add。 任何你没有添加的改动都不会被包含在内 —— 这意味着你可以比绝大多数其他源代码版本控制系统更精确地归置你的快照。</p>
+
+<h3>git status 查看你的文件在工作目录与缓存的状态</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git status -s # 获得简短输出
+</span><span class='line'>git status # 获得详细输出</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>git diff 显示已写入缓存与已修改但尚未写入缓存的改动的区别</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git diff #尚未缓存的改动
+</span><span class='line'>git diff --cached #查看已缓存的改动
+</span><span class='line'>git diff HEAD #查看已缓存的与未缓存的所有改动
+</span><span class='line'>git diff --stat #显示摘要而非整个 diff</span></code></pre></td></tr></table></div></figure>
+
+
+<p>简而言之， 执行 git diff 来查看执行 git status 的结果的详细信息 —— 一行一行地显示这些文件是如何被修改或写入缓存的。</p>
+
+<h3>git commit 记录缓存内容的快照</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git commit -a #自动将在提交前将已记录、修改的文件放入缓存区
+</span><span class='line'>git reset HEAD #取消缓存已缓存的内容</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>git rm 将文件从缓存区移除</h3>
+
+<p>默认情况下，git rm file 会将文件从缓存区和你的硬盘中（工作目录）删除。 如果要在工作目录中留着该文件，可以使用 git rm &mdash;cached</p>
+
+<h2>分支与合并</h2>
+
+<p>简而言之，你可以执行 git branch (branchname) 来创建分支， 使用 git checkout (branchname) 命令切换到该分支，在该分支的上下文环境中， 提交快照等，之后可以很容易地来回切换。当你切换分支的时候，Git 会用该分支的最后提交的快照替换你的工作目录的内容， 所以多个分支不需要多个目录。使用 git merge 来合并分支。你可以多次合并到统一分支， 也可以选择在合并之后直接删除被并入的分支。</p>
+
+<p>本文内容摘自：<a href="http://gitref.org/zh/branching/">Git参考手册</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[如何删除Rails的Migrations]]></title>
