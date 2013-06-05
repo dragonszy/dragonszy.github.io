@@ -3,7 +3,7 @@ layout: post
 title: "开源的Python敏捷开发库 - Kivy"
 date: 2013-05-29 19:57
 comments: true
-categories: Python
+categories: [Python, Kivy]
 ---
 
 ### Kivy简介
