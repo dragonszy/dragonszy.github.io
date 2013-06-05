@@ -71,14 +71,14 @@ Rails 3.2.13
 [这篇](http://nginx.org/en/linux_packages.html)是Nginx官网关于通过包管理安装方法。
 这里简要阐述Ubuntu12.04的安装过程。
 
-1. 下载key文件，导入key文件
+ - 下载key文件，导入key文件
 ```
 $ cd
 $ wget http://nginx.org/keys/nginx_signing.key
 $ sudo apt-key add nginx_signing.key
 ```
 
-2. 增加源
+ - 增加源
 ```
 $ sudo vim /etc/apt/sources.list
 ```
@@ -89,12 +89,12 @@ deb-src http://nginx.org/packages/ubuntu/ codename nginx
 ```
 其中codename是你ubuntu的发行号，12.04是precise，上面给的网址也有详细列表。
 
-3. 更新源
+ - 更新源
 ```
 $ sudo apt-get update
 ```
 
-4. 安装nginx
+ - 安装nginx
 ```
 $ sudo apt-get install nginx
 ```
