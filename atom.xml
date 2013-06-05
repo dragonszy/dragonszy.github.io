@@ -4,7 +4,7 @@
   <title><![CDATA[dragonszy的博客]]></title>
   <link href="http://dragonszy.github.io/atom.xml" rel="self"/>
   <link href="http://dragonszy.github.io/"/>
-  <updated>2013-05-31T12:07:37+08:00</updated>
+  <updated>2013-06-05T21:21:33+08:00</updated>
   <id>http://dragonszy.github.io/</id>
   <author>
     <name><![CDATA[dragonszy]]></name>
@@ -12,6 +12,451 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ubuntu(12.04) VPS部署Rails环境]]></title>
+    <link href="http://dragonszy.github.io/blog/2013/06/05/deploy-rails-on-ubuntu-vps/"/>
+    <updated>2013-06-05T20:42:00+08:00</updated>
+    <id>http://dragonszy.github.io/blog/2013/06/05/deploy-rails-on-ubuntu-vps</id>
+    <content type="html"><![CDATA[<h3>环境需求</h3>
+
+<ol>
+<li>Ubuntu12.04</li>
+<li>Nginx</li>
+<li>Unicorn</li>
+<li>RVM &ndash; Ruby1.9.3 &ndash; Rails</li>
+<li>MySQL</li>
+</ol>
+
+
+<h3>安装系统需要的包</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get install -y build-essential openssl curl libcurl3-dev libreadline6 libreadline6-dev git zlib1g zlib1g-dev libssl-dev libyaml-dev libxml2-dev libxslt-dev autoconf automake libtool imagemagick libmagickwand-dev libpcre3-dev libsqlite3-dev libmysql-ruby libmysqlclient-dev</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>安装RVM</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ \curl -L https://get.rvm.io | bash -s stable</span></code></pre></td></tr></table></div></figure>
+
+
+<p>载入RVM环境，或重新开Terminal</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ source ~/.rvm/scripts/rvm</span></code></pre></td></tr></table></div></figure>
+
+
+<p>检测安装是否正确</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm -v
+</span><span class='line'>rvm 1.20.13 (stable) by Wayne E. Seguin &lt;wayneeseguin@gmail.com&gt;, Michal Papis &lt;mpapis@gmail.com&gt; [https://rvm.io/]</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>RVM安装Ruby</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm install 1.9.3  # 如果需要1.9.3版
+</span><span class='line'>$ rvm install 2.0.0  # 如果需要2.0.0版</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>设置Ruby版本</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm 1.9.3 --default</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这时查看ruby的默认版本</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ruby -v
+</span><span class='line'>ruby 1.9.3p429 (2013-05-15 revision 40747) [i686-linux]
+</span><span class='line'>$ gem -v
+</span><span class='line'>1.8.25</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>安装Rails</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ gem install bundler rails</span></code></pre></td></tr></table></div></figure>
+
+
+<p>查看测试安装是否正确</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ bundle -v
+</span><span class='line'>Bundler version 1.3.5
+</span><span class='line'>$ rails -v
+</span><span class='line'>Rails 3.2.13</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>安装Nginx</h3>
+
+<p>这里强烈推荐通过软件源的方式安装最新stable的Nginx。
+默认Ubuntu自带的源通过apt-get install nginx时会装比较老的版本。
+自己编译安装的话比较慢，还要写启动脚本，做服务设置等，没有特殊需求就不用这种方式。</p>
+
+<p><a href="http://nginx.org/en/linux_packages.html">这篇</a>是Nginx官网关于通过包管理安装方法。
+这里简要阐述Ubuntu12.04的安装过程。</p>
+
+<ol>
+<li>下载key文件，导入key文件</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cd
+</span><span class='line'>$ wget http://nginx.org/keys/nginx_signing.key
+</span><span class='line'>$ sudo apt-key add nginx_signing.key</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>增加源</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo vim /etc/apt/sources.list</span></code></pre></td></tr></table></div></figure>
+
+
+<p>增加这两行</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>deb http://nginx.org/packages/ubuntu/ codename nginx
+</span><span class='line'>deb-src http://nginx.org/packages/ubuntu/ codename nginx</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中codename是你ubuntu的发行号，12.04是precise，上面给的网址也有详细列表。</p>
+
+<ol>
+<li>更新源</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get update</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>安装nginx</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get install nginx</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>安装unicorn</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ gem install unicorn</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>安装nodejs</h3>
+
+<p>rails app需要一个javascript runtime，这里我们选择nodejs，<a href="https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager">这篇</a>是官方的通过包安装方法。
+这里也只列出Ubuntu安装方法。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get update
+</span><span class='line'>$ sudo apt-get install python-software-properties python g++ make
+</span><span class='line'>$ sudo add-apt-repository ppa:chris-lea/node.js
+</span><span class='line'>$ sudo apt-get update
+</span><span class='line'>$ sudo apt-get install nodejs</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Kivy Project Pong Game]]></title>
+    <link href="http://dragonszy.github.io/blog/2013/06/03/kivy-project-pong-game/"/>
+    <updated>2013-06-03T21:45:00+08:00</updated>
+    <id>http://dragonszy.github.io/blog/2013/06/03/kivy-project-pong-game</id>
+    <content type="html"><![CDATA[<figure class='code'><figcaption><span> (main.py)</span> <a href='http://dragonszy.github.io/code/kivy-project/pong-game/main.py'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+</pre></td><td class='code'><pre><code class='py'><span class='line'><span class="kn">import</span> <span class="nn">kivy</span>
+</span><span class='line'><span class="n">kivy</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s">&#39;1.1.1&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">kivy.uix.widget</span> <span class="kn">import</span> <span class="n">Widget</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">NumericProperty</span><span class="p">,</span> <span class="n">ReferenceListProperty</span><span class="p">,</span>\
+</span><span class='line'>    <span class="n">ObjectProperty</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">kivy.vector</span> <span class="kn">import</span> <span class="n">Vector</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">PongPaddle</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">score</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">bounce_ball</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ball</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_widget</span><span class="p">(</span><span class="n">ball</span><span class="p">):</span>
+</span><span class='line'>            <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">ball</span><span class="o">.</span><span class="n">velocity</span>
+</span><span class='line'>            <span class="n">offset</span> <span class="o">=</span> <span class="p">(</span><span class="n">ball</span><span class="o">.</span><span class="n">center_y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">center_y</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">bounced</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">vel</span> <span class="o">=</span> <span class="n">bounced</span> <span class="o">*</span> <span class="mf">1.1</span>
+</span><span class='line'>            <span class="n">ball</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="n">vel</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">offset</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">PongBall</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">velocity_x</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">velocity_y</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">velocity</span> <span class="o">=</span> <span class="n">ReferenceListProperty</span><span class="p">(</span><span class="n">velocity_x</span><span class="p">,</span> <span class="n">velocity_y</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">PongGame</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">ball</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">player1</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">player2</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">serve_ball</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vel</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">)):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">ball</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">ball</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="n">vel</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">ball</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c">#bounce of paddles</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">player1</span><span class="o">.</span><span class="n">bounce_ball</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ball</span><span class="p">)</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">player2</span><span class="o">.</span><span class="n">bounce_ball</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ball</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c">#bounce ball off bottom or top</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ball</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ball</span><span class="o">.</span><span class="n">top</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="p">):</span>
+</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">ball</span><span class="o">.</span><span class="n">velocity_y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c">#went of to a side to score point?</span>
+</span><span class='line'>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ball</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">:</span>
+</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">player2</span><span class="o">.</span><span class="n">score</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">serve_ball</span><span class="p">(</span><span class="n">vel</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</span><span class='line'>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ball</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">:</span>
+</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">player1</span><span class="o">.</span><span class="n">score</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">serve_ball</span><span class="p">(</span><span class="n">vel</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">3</span><span class="p">:</span>
+</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">player1</span><span class="o">.</span><span class="n">center_y</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">y</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">3</span><span class="p">:</span>
+</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">player2</span><span class="o">.</span><span class="n">center_y</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">y</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">PongApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">game</span> <span class="o">=</span> <span class="n">PongGame</span><span class="p">()</span>
+</span><span class='line'>        <span class="n">game</span><span class="o">.</span><span class="n">serve_ball</span><span class="p">()</span>
+</span><span class='line'>        <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="n">game</span><span class="o">.</span><span class="n">update</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">60.0</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">game</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">PongApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span> (pong.kv)</span> <a href='http://dragonszy.github.io/code/kivy-project/pong-game/pong.kv'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#:kivy 1.0.9</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">PongBall</span><span class="o">&gt;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">size</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span>
+</span><span class='line'>    <span class="n">canvas</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">Ellipse</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">pos</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span>
+</span><span class='line'>            <span class="n">size</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">PongPaddle</span><span class="o">&gt;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">size</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">200</span>
+</span><span class='line'>    <span class="n">canvas</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">Rectangle</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">pos</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span>
+</span><span class='line'>            <span class="n">size</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">PongGame</span><span class="o">&gt;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">ball</span><span class="p">:</span> <span class="n">pong_ball</span>
+</span><span class='line'>    <span class="n">player1</span><span class="p">:</span> <span class="n">player_left</span>
+</span><span class='line'>    <span class="n">player2</span><span class="p">:</span> <span class="n">player_right</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">canvas</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">Rectangle</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">pos</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">center_x</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span>
+</span><span class='line'>            <span class="n">size</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Label</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">font_size</span><span class="p">:</span> <span class="mi">70</span>
+</span><span class='line'>        <span class="n">center_x</span><span class="p">:</span> <span class="n">root</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">4</span>
+</span><span class='line'>        <span class="n">top</span><span class="p">:</span> <span class="n">root</span><span class="o">.</span><span class="n">top</span> <span class="o">-</span> <span class="mi">50</span>
+</span><span class='line'>        <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">player1</span><span class="o">.</span><span class="n">score</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Label</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">font_size</span><span class="p">:</span> <span class="mi">70</span>
+</span><span class='line'>        <span class="n">center_x</span><span class="p">:</span> <span class="n">root</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">4</span>
+</span><span class='line'>        <span class="n">top</span><span class="p">:</span> <span class="n">root</span><span class="o">.</span><span class="n">top</span> <span class="o">-</span> <span class="mi">50</span>
+</span><span class='line'>        <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">player2</span><span class="o">.</span><span class="n">score</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">PongBall</span><span class="p">:</span>
+</span><span class='line'>        <span class="nb">id</span><span class="p">:</span> <span class="n">pong_ball</span>
+</span><span class='line'>        <span class="n">center</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">center</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">PongPaddle</span><span class="p">:</span>
+</span><span class='line'>        <span class="nb">id</span><span class="p">:</span> <span class="n">player_left</span>
+</span><span class='line'>        <span class="n">x</span><span class="p">:</span> <span class="n">root</span><span class="o">.</span><span class="n">x</span>
+</span><span class='line'>        <span class="n">center_y</span><span class="p">:</span> <span class="n">root</span><span class="o">.</span><span class="n">center_y</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">PongPaddle</span><span class="p">:</span>
+</span><span class='line'>        <span class="nb">id</span><span class="p">:</span> <span class="n">player_right</span>
+</span><span class='line'>        <span class="n">x</span><span class="p">:</span> <span class="n">root</span><span class="o">.</span><span class="n">width</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span>
+</span><span class='line'>        <span class="n">center_y</span><span class="p">:</span> <span class="n">root</span><span class="o">.</span><span class="n">center_y</span>
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Git 快捷指南]]></title>

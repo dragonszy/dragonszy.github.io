@@ -1,0 +1,388 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Ubuntu(12.04) VPS部署Rails环境 - dragonszy的博客</title>
+  <meta name="author" content="dragonszy">
+
+  
+  <meta name="description" content="环境需求 Ubuntu12.04
+Nginx
+Unicorn
+RVM &ndash; Ruby1.9.3 &ndash; Rails
+MySQL 安装系统需要的包 1
+$ sudo apt-get install -y build-essential openssl curl libcurl3- &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://dragonszy.github.io/blog/2013/06/05/deploy-rails-on-ubuntu-vps">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="dragonszy的博客" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">dragonszy的博客</a></h1>
+  
+    <h2>那真实的即是虚幻，那虚幻的即是真实</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:dragonszy.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about-me">About Me</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Ubuntu(12.04) VPS部署Rails环境</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-05T20:42:00+08:00" pubdate data-updated="true">Jun 5<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>环境需求</h3>
+
+<ol>
+<li>Ubuntu12.04</li>
+<li>Nginx</li>
+<li>Unicorn</li>
+<li>RVM &ndash; Ruby1.9.3 &ndash; Rails</li>
+<li>MySQL</li>
+</ol>
+
+
+<h3>安装系统需要的包</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get install -y build-essential openssl curl libcurl3-dev libreadline6 libreadline6-dev git zlib1g zlib1g-dev libssl-dev libyaml-dev libxml2-dev libxslt-dev autoconf automake libtool imagemagick libmagickwand-dev libpcre3-dev libsqlite3-dev libmysql-ruby libmysqlclient-dev</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>安装RVM</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ \curl -L https://get.rvm.io | bash -s stable</span></code></pre></td></tr></table></div></figure>
+
+
+<p>载入RVM环境，或重新开Terminal</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ source ~/.rvm/scripts/rvm</span></code></pre></td></tr></table></div></figure>
+
+
+<p>检测安装是否正确</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm -v
+</span><span class='line'>rvm 1.20.13 (stable) by Wayne E. Seguin &lt;wayneeseguin@gmail.com&gt;, Michal Papis &lt;mpapis@gmail.com&gt; [https://rvm.io/]</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>RVM安装Ruby</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm install 1.9.3  # 如果需要1.9.3版
+</span><span class='line'>$ rvm install 2.0.0  # 如果需要2.0.0版</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>设置Ruby版本</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm 1.9.3 --default</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这时查看ruby的默认版本</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ruby -v
+</span><span class='line'>ruby 1.9.3p429 (2013-05-15 revision 40747) [i686-linux]
+</span><span class='line'>$ gem -v
+</span><span class='line'>1.8.25</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>安装Rails</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ gem install bundler rails</span></code></pre></td></tr></table></div></figure>
+
+
+<p>查看测试安装是否正确</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ bundle -v
+</span><span class='line'>Bundler version 1.3.5
+</span><span class='line'>$ rails -v
+</span><span class='line'>Rails 3.2.13</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>安装Nginx</h3>
+
+<p>这里强烈推荐通过软件源的方式安装最新stable的Nginx。
+默认Ubuntu自带的源通过apt-get install nginx时会装比较老的版本。
+自己编译安装的话比较慢，还要写启动脚本，做服务设置等，没有特殊需求就不用这种方式。</p>
+
+<p><a href="http://nginx.org/en/linux_packages.html">这篇</a>是Nginx官网关于通过包管理安装方法。
+这里简要阐述Ubuntu12.04的安装过程。</p>
+
+<ol>
+<li>下载key文件，导入key文件</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cd
+</span><span class='line'>$ wget http://nginx.org/keys/nginx_signing.key
+</span><span class='line'>$ sudo apt-key add nginx_signing.key</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>增加源</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo vim /etc/apt/sources.list</span></code></pre></td></tr></table></div></figure>
+
+
+<p>增加这两行</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>deb http://nginx.org/packages/ubuntu/ codename nginx
+</span><span class='line'>deb-src http://nginx.org/packages/ubuntu/ codename nginx</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中codename是你ubuntu的发行号，12.04是precise，上面给的网址也有详细列表。</p>
+
+<ol>
+<li>更新源</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get update</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>安装nginx</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get install nginx</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>安装unicorn</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ gem install unicorn</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>安装nodejs</h3>
+
+<p>rails app需要一个javascript runtime，这里我们选择nodejs，<a href="https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager">这篇</a>是官方的通过包安装方法。
+这里也只列出Ubuntu安装方法。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get update
+</span><span class='line'>$ sudo apt-get install python-software-properties python g++ make
+</span><span class='line'>$ sudo add-apt-repository ppa:chris-lea/node.js
+</span><span class='line'>$ sudo apt-get update
+</span><span class='line'>$ sudo apt-get install nodejs</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">dragonszy</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-05T20:42:00+08:00" pubdate data-updated="true">Jun 5<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/06/03/kivy-project-pong-game/" title="Previous Post: Kivy Project Pong Game">&laquo; Kivy Project Pong Game</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/05/deploy-rails-on-ubuntu-vps/">Ubuntu(12.04) VPS部署Rails环境</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/03/kivy-project-pong-game/">Kivy Project Pong Game</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/31/git-quick-guide/">Git 快捷指南</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/30/how-to-delete-rails-migration/">如何删除Rails的Migrations</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/29/python-library-kivy/">开源的Python敏捷开发库 - Kivy</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - dragonszy -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'dragonszy-blog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://dragonszy.github.io/blog/2013/06/05/deploy-rails-on-ubuntu-vps/';
+        var disqus_url = 'http://dragonszy.github.io/blog/2013/06/05/deploy-rails-on-ubuntu-vps/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
