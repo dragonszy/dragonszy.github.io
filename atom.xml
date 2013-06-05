@@ -4,7 +4,7 @@
   <title><![CDATA[dragonszy的博客]]></title>
   <link href="http://dragonszy.github.io/atom.xml" rel="self"/>
   <link href="http://dragonszy.github.io/"/>
-  <updated>2013-06-05T21:21:33+08:00</updated>
+  <updated>2013-06-05T21:37:55+08:00</updated>
   <id>http://dragonszy.github.io/</id>
   <author>
     <name><![CDATA[dragonszy]]></name>
@@ -108,9 +108,9 @@
 <p><a href="http://nginx.org/en/linux_packages.html">这篇</a>是Nginx官网关于通过包管理安装方法。
 这里简要阐述Ubuntu12.04的安装过程。</p>
 
-<ol>
+<ul>
 <li>下载key文件，导入key文件</li>
-</ol>
+</ul>
 
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -121,9 +121,9 @@
 </span><span class='line'>$ sudo apt-key add nginx_signing.key</span></code></pre></td></tr></table></div></figure>
 
 
-<ol>
+<ul>
 <li>增加源</li>
-</ol>
+</ul>
 
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -140,18 +140,18 @@
 
 <p>其中codename是你ubuntu的发行号，12.04是precise，上面给的网址也有详细列表。</p>
 
-<ol>
+<ul>
 <li>更新源</li>
-</ol>
+</ul>
 
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get update</span></code></pre></td></tr></table></div></figure>
 
 
-<ol>
+<ul>
 <li>安装nginx</li>
-</ol>
+</ul>
 
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
