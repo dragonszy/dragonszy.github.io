@@ -3,7 +3,7 @@ layout: post
 title: "Ubuntu(12.04) VPS部署Rails环境"
 date: 2013-06-05 20:42
 comments: true
-categories: 
+categories: [Rails, Ubuntu]
 ---
 
 ### 环境需求

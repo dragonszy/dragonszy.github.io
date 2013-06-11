@@ -19,6 +19,11 @@ categories: [CSS3, HTML5]
 # 多个categories
 ```
 
+### 设置文章为草稿
+``` ruby
+published: false
+```
+
 ### 创建Page
 ``` 
 $ rake new_page[super-awesome]
@@ -26,6 +31,7 @@ $ rake new_page[super-awesome]
 $ rake new_page[super-awesome/page.html]
 # creates /source/super-awesome/page.html
 ```
+创建完新page后修改 source/_includes/custom/navigation.html 增加页面导航。
 
 ### 生成和预览
 ``` 
@@ -47,3 +53,7 @@ $ git add .
 $ git commit -m 'some changes'
 $ git push origin source
 ```
+
+### 已知问题
+1. 有序列表下嵌套内容列表序号不增加，可能是嵌套错误导致
+2. rake generate 和 rake preview 之后draft(published: false)文章能在本地看到，这是有意为之，deploy时draft不参与，不用担心
