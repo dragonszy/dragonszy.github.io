@@ -61,9 +61,9 @@ $ sudo apt-get install -y build-essential openssl curl libcurl3- &hellip;">
 </form>
   
 <ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-  <li><a href="/about-me">About Me</a></li>
+  <li><a href="/">博客</a></li>
+  <li><a href="/blog/archives">归档</a></li>
+  <li><a href="/about-me">关于我</a></li>
 </ul>
 
 </nav>
@@ -808,6 +808,13 @@ $ sudo apt-get install -y build-essential openssl curl libcurl3- &hellip;">
 </span></code></pre></td></tr></table></div></figure>
 
 
+<h3>设置文章为草稿</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">published</span><span class="p">:</span> <span class="kp">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
 <h3>创建Page</h3>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -820,6 +827,8 @@ $ sudo apt-get install -y build-essential openssl curl libcurl3- &hellip;">
 </span><span class='line'><span class="c1"># creates /source/super-awesome/page.html</span>
 </span></code></pre></td></tr></table></div></figure>
 
+
+<p>创建完新page后修改 source/_includes/custom/navigation.html 增加页面导航。</p>
 
 <h3>生成和预览</h3>
 
@@ -852,6 +861,14 @@ $ sudo apt-get install -y build-essential openssl curl libcurl3- &hellip;">
 </span><span class='line'><span class="err">$</span> <span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s1">&#39;some changes&#39;</span>
 </span><span class='line'><span class="err">$</span> <span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">source</span>
 </span></code></pre></td></tr></table></div></figure>
+
+
+<h3>已知问题</h3>
+
+<ol>
+<li>有序列表下嵌套内容列表序号不增加，可能是嵌套错误导致</li>
+<li>rake generate 和 rake preview 之后draft(published: false)文章能在本地看到，这是有意为之，deploy时draft不参与，不用担心</li>
+</ol>
 
 </div>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | dragonszy的博客]]></title>
   <link href="http://dragonszy.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://dragonszy.github.io/"/>
-  <updated>2013-06-05T21:37:55+08:00</updated>
+  <updated>2013-06-11T15:07:24+08:00</updated>
   <id>http://dragonszy.github.io/</id>
   <author>
     <name><![CDATA[dragonszy]]></name>
@@ -37,6 +37,12 @@ categories: Octopress</p>
 
 <p>```</p>
 
+<h3>设置文章为草稿</h3>
+
+<p><code>ruby
+published: false
+</code></p>
+
 <h3>创建Page</h3>
 
 <p>```
@@ -48,7 +54,8 @@ $ rake new_page[super-awesome]</p>
 
 <h1>creates /source/super-awesome/page.html</h1>
 
-<p>```</p>
+<p>```
+创建完新page后修改 source/_includes/custom/navigation.html 增加页面导航。</p>
 
 <h3>生成和预览</h3>
 
@@ -73,6 +80,14 @@ $ git add .
 $ git commit -m 'some changes'
 $ git push origin source
 </code></p>
+
+<h3>已知问题</h3>
+
+<ol>
+<li>有序列表下嵌套内容列表序号不增加，可能是嵌套错误导致</li>
+<li>rake generate 和 rake preview 之后draft(published: false)文章能在本地看到，这是有意为之，deploy时draft不参与，不用担心</li>
+</ol>
+
 ]]></content>
   </entry>
   
