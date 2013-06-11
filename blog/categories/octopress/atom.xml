@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | dragonszy的博客]]></title>
   <link href="http://dragonszy.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://dragonszy.github.io/"/>
-  <updated>2013-06-11T15:07:24+08:00</updated>
+  <updated>2013-06-11T22:02:02+08:00</updated>
   <id>http://dragonszy.github.io/</id>
   <author>
     <name><![CDATA[dragonszy]]></name>
@@ -81,11 +81,44 @@ $ git commit -m 'some changes'
 $ git push origin source
 </code></p>
 
-<h3>已知问题</h3>
+<h3>推荐编辑器</h3>
+
+<ol>
+<li>Sublime Text</li>
+<li>Mou</li>
+</ol>
+
+
+<h3>在新标签页打开超链接</h3>
+
+<ol>
+<li>直接使用html <code>&lt;a href="http://dragonszy.github.io"&gt;dragonszy's Blog&lt;/a&gt;</code> 标签</li>
+<li>修改 source/<em>includes/custom/head.html ，增加javascript代码自动修改超链接
+``` javascript
+function addBlankTargetForLinks () {
+$(&lsquo;a[href^=&ldquo;http&rdquo;]&rsquo;).each(function(){
+$(this).attr(&lsquo;target&rsquo;, &lsquo;</em>blank&rsquo;);
+});
+}</li>
+</ol>
+
+
+<p>$(document).bind(&lsquo;DOMNodeInserted&rsquo;, function(event) {
+  addBlankTargetForLinks();
+});
+<code>``
+记得要加上</code><script type="text/javascript"></script>` 标签哦!</p>
+
+<h3>Latex公式支持</h3>
+
+<p>参考<a href="http://yanping.me/cn/blog/2012/03/10/octopress-with-latex/">雁起平沙博客</a>介绍方法，使用 kramdown 渲染markdown文档，支持 Latex 。</p>
+
+<h3>常见问题 FAQ</h3>
 
 <ol>
 <li>有序列表下嵌套内容列表序号不增加，可能是嵌套错误导致</li>
 <li>rake generate 和 rake preview 之后draft(published: false)文章能在本地看到，这是有意为之，deploy时draft不参与，不用担心</li>
+<li>Markdown语法的超链接不能在新窗口打开</li>
 </ol>
 
 ]]></content>

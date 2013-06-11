@@ -35,6 +35,16 @@ $ sudo apt-get install -y build-essential openssl curl libcurl3- &hellip;">
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
+<script type="text/javascript">
+function addBlankTargetForLinks () {
+  $('a[href^="http"]').each(function(){
+      $(this).attr('target', '_blank');
+  });
+}
+$(document).bind('DOMNodeInserted', function(event) {
+  addBlankTargetForLinks();
+});
+</script>
   
 
 </head>
@@ -46,7 +56,6 @@ $ sudo apt-get install -y build-essential openssl curl libcurl3- &hellip;">
     <h2>那真实的即是虚幻，那虚幻的即是真实</h2>
   
 </hgroup>
-
 </header>
   <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
@@ -863,11 +872,55 @@ $ sudo apt-get install -y build-essential openssl curl libcurl3- &hellip;">
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>已知问题</h3>
+<h3>推荐编辑器</h3>
+
+<ol>
+<li>Sublime Text</li>
+<li>Mou</li>
+</ol>
+
+
+<h3>在新标签页打开超链接</h3>
+
+<ol>
+<li>直接使用html <code>&lt;a href="http://dragonszy.github.io"&gt;dragonszy's Blog&lt;/a&gt;</code> 标签</li>
+<li>修改 source/_includes/custom/head.html ，增加javascript代码自动修改超链接</li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">addBlankTargetForLinks</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;a[href^=&quot;http&quot;]&#39;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="s1">&#39;_blank&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">bind</span><span class="p">(</span><span class="s1">&#39;DOMNodeInserted&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">addBlankTargetForLinks</span><span class="p">();</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>记得要加上 <code>&lt;script type="text/javascript"&gt;&lt;/script&gt;</code> 标签哦!</p>
+
+<h3>Latex公式支持</h3>
+
+<p>参考<a href="http://yanping.me/cn/blog/2012/03/10/octopress-with-latex/">雁起平沙博客</a>介绍方法，使用 kramdown 渲染markdown文档，支持 Latex 。</p>
+
+<h3>常见问题 FAQ</h3>
 
 <ol>
 <li>有序列表下嵌套内容列表序号不增加，可能是嵌套错误导致</li>
 <li>rake generate 和 rake preview 之后draft(published: false)文章能在本地看到，这是有意为之，deploy时draft不参与，不用担心</li>
+<li>Markdown语法的超链接不能在新窗口打开</li>
 </ol>
 
 </div>
