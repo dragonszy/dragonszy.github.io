@@ -1,115 +1,104 @@
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>dragonszy的博客</title>
-  <meta name="author" content="dragonszy">
+	<meta charset="utf-8">
+	<title>dragonszy的博客</title>
+	<meta name="author" content="dragonszy">
 
-  
-  <meta name="description" content="环境需求 Ubuntu12.04
+	
+	<meta name="description" content="环境需求 Ubuntu12.04
 Nginx
 Unicorn
 RVM &ndash; Ruby1.9.3 &ndash; Rails
 MySQL 安装系统需要的包 1
 $ sudo apt-get install -y build-essential openssl curl libcurl3- &hellip;">
-  
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://dragonszy.github.io">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="dragonszy的博客" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
-<script type="text/javascript">
+	<link href="/atom.xml" rel="alternate" title="dragonszy的博客" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript">
 function addBlankTargetForLinks () {
   $('a[href^="http"]').each(function(){
-      $(this).attr('target', '_blank');
+  $(this).attr('target', '_blank');
   });
 }
 $(document).bind('DOMNodeInserted', function(event) {
   addBlankTargetForLinks();
 });
 </script>
-  
-
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">dragonszy的博客</a></h1>
-  
-    <h2>那真实的即是虚幻，那虚幻的即是真实</h2>
-  
-</hgroup>
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
+<body>
+	<header id="header" class="inner"><h1><a href="/">dragonszy的博客</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/about-me">About me</a></li>
 </ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:dragonszy.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">博客</a></li>
-  <li><a href="/blog/archives">归档</a></li>
-  <li><a href="/about-me">关于我</a></li>
-</ul>
-
 </nav>
-  <div id="main">
-    <div id="content">
-      <div class="blog-index">
-  
-  
-  
-    <article>
-      
-  <header>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/about-me">About me</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:dragonszy.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
     
-      <h1 class="entry-title"><a href="/blog/2013/06/05/deploy-rails-on-ubuntu-vps/">Ubuntu(12.04) VPS部署Rails环境</a></h1>
-    
-    
-      <p class="meta">
-        
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:dragonszy.github.io">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner">
 
 
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-05T20:42:00+08:00" pubdate data-updated="true">Jun 5<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>环境需求</h3>
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/06/05/deploy-rails-on-ubuntu-vps/">
+		
+			Ubuntu(12.04) VPS部署Rails环境</a>
+	</h2>
+	<div class="entry-content">
+		<h3>环境需求</h3>
 
 <ol>
 <li>Ubuntu12.04</li>
@@ -271,42 +260,46 @@ $(document).bind('DOMNodeInserted', function(event) {
 </span><span class='line'>$ sudo apt-get update
 </span><span class='line'>$ sudo apt-get install nodejs</span></code></pre></td></tr></table></div></figure>
 
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-05T20:42:00+08:00" pubdate data-updated="true">Jun 5<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/ubuntu/'>Ubuntu</a>
+
+
 </div>
-  
-  
+	
+</div></article>
 
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/06/03/kivy-project-pong-game/">Kivy Project Pong Game</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-03T21:45:00+08:00" pubdate data-updated="true">Jun 3<span>rd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><figure class='code'><figcaption><span> (main.py)</span> <a href='/code/kivy-project/pong-game/main.py'>download</a></figcaption>
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/06/03/kivy-project-pong-game/">
+		
+			Kivy Project Pong Game</a>
+	</h2>
+	<div class="entry-content">
+		<figure class='code'><figcaption><span> (main.py)</span> <a href='/code/kivy-project/pong-game/main.py'>download</a></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -573,42 +566,46 @@ $(document).bind('DOMNodeInserted', function(event) {
 </span><span class='line'>
 </span></code></pre></td></tr></table></div></figure>
 
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-03T21:45:00+08:00" pubdate data-updated="true">Jun 3<span>rd</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/kivy/'>Kivy</a>, <a class='category' href='/blog/categories/python/'>Python</a>
+
+
 </div>
-  
-  
+	
+</div></article>
 
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/31/git-quick-guide/">Git 快捷指南</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-31T11:50:00+08:00" pubdate data-updated="true">May 31<span>st</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>基本快照</h2>
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/05/31/git-quick-guide/">
+		
+			Git 快捷指南</a>
+	</h2>
+	<div class="entry-content">
+		<h2>基本快照</h2>
 
 <p>简而言之，使用 git add 添加需要追踪的新文件和待提交的更改， 然后使用 git status 和 git diff 查看有何改动， 最后用 git commit 将你的快照记录。这就是你要用的基本流程，绝大部分时候都是这样的。</p>
 
@@ -663,42 +660,46 @@ $(document).bind('DOMNodeInserted', function(event) {
 <p>简而言之，你可以执行 git branch (branchname) 来创建分支， 使用 git checkout (branchname) 命令切换到该分支，在该分支的上下文环境中， 提交快照等，之后可以很容易地来回切换。当你切换分支的时候，Git 会用该分支的最后提交的快照替换你的工作目录的内容， 所以多个分支不需要多个目录。使用 git merge 来合并分支。你可以多次合并到统一分支， 也可以选择在合并之后直接删除被并入的分支。</p>
 
 <p>本文内容摘自：<a href="http://gitref.org/zh/branching/">Git参考手册</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-31T11:50:00+08:00" pubdate data-updated="true">May 31<span>st</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/git/'>Git</a>
+
+
 </div>
-  
-  
+	
+</div></article>
 
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/30/how-to-delete-rails-migration/">如何删除Rails的Migrations</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-30T21:55:00+08:00" pubdate data-updated="true">May 30<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>错误示范</h3>
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/05/30/how-to-delete-rails-migration/">
+		
+			如何删除Rails的Migrations</a>
+	</h2>
+	<div class="entry-content">
+		<h3>错误示范</h3>
 
 <p>直接删除db/migrate目录下的migration的rb文件，然后执行rake db:migrate</p>
 
@@ -714,42 +715,46 @@ $(document).bind('DOMNodeInserted', function(event) {
 最好的做法是写一个新的migration来执行修复上一个写错了的migration的操作。</p>
 
 <p>详细请参考：<a href="http://guides.ruby-china.org/migrations.html">Rails Migration Guides</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-30T21:55:00+08:00" pubdate data-updated="true">May 30<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>
+
+
 </div>
-  
-  
+	
+</div></article>
 
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/29/python-library-kivy/">开源的Python敏捷开发库 - Kivy</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-29T19:57:00+08:00" pubdate data-updated="true">May 29<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Kivy简介</h3>
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/05/29/python-library-kivy/">
+		
+			开源的Python敏捷开发库 - Kivy</a>
+	</h2>
+	<div class="entry-content">
+		<h3>Kivy简介</h3>
 
 <blockquote><p><a href="http://kivy.org/">Kivy</a> &ndash; Open source Python library for rapid development of applications that make use of innovative user interfaces, such as multi-touch apps.</p></blockquote>
 
@@ -762,42 +767,46 @@ $(document).bind('DOMNodeInserted', function(event) {
 <p>这个平台当前支持 Linux，Windows，Mac OS X 和 Android.</p>
 
 <p>Kivy 提供一系列功能去处理动画，缓存，手势识别，画图和许多其它功能。它也内建了一些用户接口组件，例如：按钮，网格（Grid），幻灯展示功能（Slider）和树状浏览（tree view）。</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-29T19:57:00+08:00" pubdate data-updated="true">May 29<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/kivy/'>Kivy</a>, <a class='category' href='/blog/categories/python/'>Python</a>
+
+
 </div>
-  
-  
+	
+</div></article>
 
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/28/how-to-use-octopress/">如何使用Octopress博客</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-28T10:58:00+08:00" pubdate data-updated="true">May 28<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>创建Post</h3>
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/05/28/how-to-use-octopress/">
+		
+			如何使用Octopress博客</a>
+	</h2>
+	<div class="entry-content">
+		<h3>创建Post</h3>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rake</span> <span class="n">new_post</span><span class="o">[</span><span class="s2">&quot;My First Octopress Blog&quot;</span><span class="o">]</span>
@@ -923,64 +932,54 @@ $(document).bind('DOMNodeInserted', function(event) {
 <li>Markdown语法的超链接不能在新窗口打开</li>
 </ol>
 
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-28T10:58:00+08:00" pubdate data-updated="true">May 28<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/octopress/'>Octopress</a>
+
+
 </div>
-  
-  
+	
+</div></article>
 
+<nav id="pagenavi">
+    
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
 
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2013/06/05/deploy-rails-on-ubuntu-vps/">Ubuntu(12.04) VPS部署Rails环境</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/06/03/kivy-project-pong-game/">Kivy Project Pong Game</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/31/git-quick-guide/">Git 快捷指南</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/30/how-to-delete-rails-migration/">如何删除Rails的Migrations</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/29/python-library-kivy/">开源的Python敏捷开发库 - Kivy</a>
-      </li>
-    
-  </ul>
-</section>
-
-
-
-
-
-  
-</aside>
-
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - dragonszy -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
+    dragonszy
 
 </footer>
-  
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
 
 <script type="text/javascript">
       var disqus_shortname = 'dragonszy-blog';
@@ -994,12 +993,6 @@ $(document).bind('DOMNodeInserted', function(event) {
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
-
-
 
 
 
