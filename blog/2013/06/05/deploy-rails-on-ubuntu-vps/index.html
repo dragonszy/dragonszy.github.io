@@ -3,16 +3,20 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Ubuntu(12.04) VPS部署Rails环境 - dragonszy的博客</title>
+	<title>Ubuntu 12.04 VPS部署Rails环境 - dragonszy的博客</title>
 	<meta name="author" content="dragonszy">
 
 	
-	<meta name="description" content="环境需求 Ubuntu12.04
+	<meta name="description" content="环境需求 Ubuntu 12.04 (32bit)
 Nginx
 Unicorn
 RVM &ndash; Ruby1.9.3 &ndash; Rails
-MySQL 安装系统需要的包 1
-$ sudo apt-get install -y build-essential openssl curl libcurl3- &hellip;">
+MySQL 添加部署账户 1
+2
+3
+adduser username --ingroup sudo
+su username
+cd 更新源 1 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -88,11 +92,11 @@ $(document).bind('DOMNodeInserted', function(event) {
 		
 	
 	<div id="content" class="inner"><article class="post">
-	<h2 class="title">Ubuntu(12.04) VPS部署Rails环境</h2>
+	<h2 class="title">Ubuntu 12.04 VPS部署Rails环境</h2>
 	<div class="entry-content"><h3>环境需求</h3>
 
 <ol>
-<li>Ubuntu12.04</li>
+<li>Ubuntu 12.04 (32bit)</li>
 <li>Nginx</li>
 <li>Unicorn</li>
 <li>RVM &ndash; Ruby1.9.3 &ndash; Rails</li>
@@ -100,11 +104,29 @@ $(document).bind('DOMNodeInserted', function(event) {
 </ol>
 
 
+<h3>添加部署账户</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>adduser username --ingroup sudo
+</span><span class='line'>su username
+</span><span class='line'>cd</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>更新源</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get update</span></code></pre></td></tr></table></div></figure>
+
+
 <h3>安装系统需要的包</h3>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get install -y build-essential openssl curl libcurl3-dev libreadline6 libreadline6-dev git zlib1g zlib1g-dev libssl-dev libyaml-dev libxml2-dev libxslt-dev autoconf automake libtool imagemagick libmagickwand-dev libpcre3-dev libsqlite3-dev libmysql-ruby libmysqlclient-dev</span></code></pre></td></tr></table></div></figure>
 
+
+<p>注意 Ubuntu 12.04 (64bit) 此处安装 imagemagick 相关包时会出错，请参见<a href="http://stackoverflow.com/questions/3704919/installing-rmagick-on-ubuntu">这篇帖子</a>。</p>
 
 <h3>安装RVM</h3>
 

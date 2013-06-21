@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ubuntu | dragonszy的博客]]></title>
   <link href="http://dragonszy.github.io/blog/categories/ubuntu/atom.xml" rel="self"/>
   <link href="http://dragonszy.github.io/"/>
-  <updated>2013-06-16T13:27:30+08:00</updated>
+  <updated>2013-06-21T13:22:44+08:00</updated>
   <id>http://dragonszy.github.io/</id>
   <author>
     <name><![CDATA[dragonszy]]></name>
@@ -14,14 +14,14 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Ubuntu(12.04) VPS部署Rails环境]]></title>
+    <title type="html"><![CDATA[Ubuntu 12.04 VPS部署Rails环境]]></title>
     <link href="http://dragonszy.github.io/blog/2013/06/05/deploy-rails-on-ubuntu-vps/"/>
     <updated>2013-06-05T20:42:00+08:00</updated>
     <id>http://dragonszy.github.io/blog/2013/06/05/deploy-rails-on-ubuntu-vps</id>
     <content type="html"><![CDATA[<h3>环境需求</h3>
 
 <ol>
-<li>Ubuntu12.04</li>
+<li>Ubuntu 12.04 (32bit)</li>
 <li>Nginx</li>
 <li>Unicorn</li>
 <li>RVM &ndash; Ruby1.9.3 &ndash; Rails</li>
@@ -29,11 +29,26 @@
 </ol>
 
 
+<h3>添加部署账户</h3>
+
+<p><code>
+adduser username --ingroup sudo
+su username
+cd
+</code></p>
+
+<h3>更新源</h3>
+
+<p><code>
+$ sudo apt-get update
+</code></p>
+
 <h3>安装系统需要的包</h3>
 
 <p><code>
 $ sudo apt-get install -y build-essential openssl curl libcurl3-dev libreadline6 libreadline6-dev git zlib1g zlib1g-dev libssl-dev libyaml-dev libxml2-dev libxslt-dev autoconf automake libtool imagemagick libmagickwand-dev libpcre3-dev libsqlite3-dev libmysql-ruby libmysqlclient-dev
-</code></p>
+</code>
+注意 Ubuntu 12.04 (64bit) 此处安装 imagemagick 相关包时会出错，请参见<a href="http://stackoverflow.com/questions/3704919/installing-rmagick-on-ubuntu">这篇帖子</a>。</p>
 
 <h3>安装RVM</h3>
 
