@@ -1,23 +1,35 @@
 ---
 layout: post
-title: "Ubuntu(12.04) VPS部署Rails环境"
+title: "Ubuntu 12.04 VPS部署Rails环境"
 date: 2013-06-05 20:42
 comments: true
 categories: [Rails, Ubuntu]
 ---
 
 ### 环境需求
-1. Ubuntu12.04
+1. Ubuntu 12.04 (32bit)
 2. Nginx
 3. Unicorn
 4. RVM - Ruby1.9.3 - Rails
 5. MySQL
 
-### 安装系统需要的包
+### 添加部署账户
+```
+adduser username --ingroup sudo
+su username
+cd
+```
 
+### 更新源
+```
+$ sudo apt-get update
+```
+
+### 安装系统需要的包
 ```
 $ sudo apt-get install -y build-essential openssl curl libcurl3-dev libreadline6 libreadline6-dev git zlib1g zlib1g-dev libssl-dev libyaml-dev libxml2-dev libxslt-dev autoconf automake libtool imagemagick libmagickwand-dev libpcre3-dev libsqlite3-dev libmysql-ruby libmysqlclient-dev
 ```
+注意 Ubuntu 12.04 (64bit) 此处安装 imagemagick 相关包时会出错，请参见[这篇帖子](http://stackoverflow.com/questions/3704919/installing-rmagick-on-ubuntu)。
 
 ### 安装RVM
 ```
